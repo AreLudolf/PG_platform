@@ -12,3 +12,7 @@ enemy_speed = 2
 player_ALPHA = (0, 0, 0)
 enemy_ALPHA = (0, 0, 0)
 plat_ALPHA = (0, 0, 0)
+scrl_forwardx = 600
+scrl_backwardx= 230
+scrl_upy = None
+scrl_downy = None

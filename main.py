@@ -28,6 +28,7 @@ main = True
 backdrop = pygame.image.load(os.path.join(settings.png_folder,'tmp_bckgr.png'))
 backdropbox = world.get_rect()
 
+all_sprites = pygame.sprite.Group()
 player = player.Player()   # spawn player
 player.rect.x = 0   # go to x
 player.rect.y = 0   # go to y
@@ -38,6 +39,7 @@ eloc = [] #enemy location
 eloc = [400,0]
 #level = level.Level()
 enemy_list = level.Level.bad(1, eloc)
+all_sprites.add(enemy_list)
 
 gloc = [] #ground location
 tx   = 64 #tile size x
@@ -49,8 +51,9 @@ while i <= (worldx/tx)+tx:
     i=i+1
 
 ground_list = level.Level.ground(1,gloc,tx,ty)
-
+all_sprites.add(ground_list)
 plat_list = level.Level.platform(1, tx, ty)
+all_sprites.add(plat_list)
 
 '''
 Main Loop
@@ -78,6 +81,20 @@ while main:
                 sys.exit()
             finally:
                 main = False
+
+    # scroll the world forward
+    if player.rect.x >= settings.scrl_forwardx:
+            scroll = player.rect.x - settings.scrl_forwardx
+            player.rect.x = settings.scrl_forwardx
+            for obj in all_sprites:
+                    obj.rect.x -= scroll
+
+    # scroll the world backward
+    if player.rect.x <= settings.scrl_backwardx:
+            scroll = settings.scrl_backwardx - player.rect.x
+            player.rect.x = settings.scrl_backwardx
+            for obj in all_sprites:
+                    obj.rect.x += scroll
 
     player.gravity()
     player.update(enemy_list, ground_list, plat_list, tx, ty)  # update player position
