@@ -63,7 +63,7 @@ while main:
                 player.control(settings.move_speed,0)
             if event.key == pygame.K_SPACE:
                 print("jump")
-                player.jump()
+                player.jump(plat_list, ground_list)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == ord('a'):
@@ -92,13 +92,13 @@ while main:
             for obj in all_sprites:
                     obj.rect.x += scroll
 
-    player.gravity()
+    #player.gravity()
     player.update(enemy_list, ground_list, plat_list, tx, ty)  # update player position
     world.blit(backdrop, backdropbox)
     player_list.draw(world)
     enemy_list.draw(world)
     for e in enemy_list:
-        e.move()
+        e.move(ground_list, plat_list)
     ground_list.draw(world)
     plat_list.draw(world)
     pygame.display.flip()
