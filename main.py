@@ -16,10 +16,6 @@ world = pygame.display.set_mode([worldx,worldy])
 
 
 '''
-Objects
-'''
-
-'''
 Setup
 '''
 clock = pygame.time.Clock()
