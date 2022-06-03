@@ -29,11 +29,6 @@ class Player(pygame.sprite.Sprite):
         self.movey += y
 
     def update(self, enemy_list, ground_list, plat_list, tx, ty):
-        """
-        Update sprite position
-        """
-
-        print(self.movey)
         # moving left
         if self.movex < 0:
             self.frame += 1
@@ -48,6 +43,7 @@ class Player(pygame.sprite.Sprite):
                 self.frame = 0
             self.image = self.images[self.frame//settings.ani]
 
+        #enemy collision
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         for enemy in hit_list:
             self.hp -= 1
@@ -68,41 +64,19 @@ class Player(pygame.sprite.Sprite):
                 self.gravityon = False
                 self.movey = 0
                 self.rect.bottom = p.rect.top +1
-            """
-            # approach from below
-            if self.rect.bottom <= p.rect.bottom:
-               self.rect.bottom = p.rect.top
-            else:
-               self.movey += settings.gravity
-            """
+
         # fall off the world
         if self.rect.y > settings.window_height:
             self.hp -=1
             print(self.hp)
             self.rect.x = tx
             self.rect.y = ty
-        """    
-        if self.is_jumping and self.is_falling is False:
-            self.is_falling = True
-            self.movey -= settings.jump_height  # how high to jump
-        """
-        
         
         self.movey +=1
         self.rect.x = self.rect.x + self.movex
         self.rect.y = self.rect.y + self.movey
 
-    
-    def gravity(self):
-        if self.gravityon:
-            self.movey +=1
-            print("gravity on")
-    
     def jump(self, plat_list, ground_list):
-        """if self.is_jumping is False:
-            self.is_falling = False
-            self.is_jumping = True
-        """
         plat_hit_list = pygame.sprite.spritecollide(self, plat_list, False)
         ground_hit_list = pygame.sprite.spritecollide(self, ground_list, False)
         if plat_hit_list or ground_hit_list:

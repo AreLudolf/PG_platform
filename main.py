@@ -92,7 +92,6 @@ while main:
             for obj in all_sprites:
                     obj.rect.x += scroll
 
-    #player.gravity()
     player.update(enemy_list, ground_list, plat_list, tx, ty)  # update player position
     world.blit(backdrop, backdropbox)
     player_list.draw(world)
