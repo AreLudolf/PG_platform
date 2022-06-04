@@ -7,17 +7,13 @@ import enemy
 import level
 import platform
 
-'''
-Variables
-'''
+
 worldx = settings.window_width
 worldy = settings.window_height
 world = pygame.display.set_mode([worldx,worldy])
 
 
-'''
-Setup
-'''
+#SETUP---------------------
 clock = pygame.time.Clock()
 pygame.init()
 main = True
@@ -25,7 +21,7 @@ backdrop = pygame.image.load(os.path.join(settings.png_folder,'tmp_bckgr.png'))
 backdropbox = world.get_rect()
 
 all_sprites = pygame.sprite.Group()
-player = player.Player()   # spawn player
+player = player.Player()
 player.rect.x = 0   # go to x
 player.rect.y = 0   # go to y
 player_list = pygame.sprite.Group()
@@ -51,9 +47,8 @@ all_sprites.add(ground_list)
 plat_list = level.Level.platform(1, tx, ty)
 all_sprites.add(plat_list)
 
-'''
-Main Loop
-'''
+
+#GAME LOOP--------------------------------
 while main:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -70,6 +65,8 @@ while main:
                 player.control(settings.move_speed,0)
             if event.key == pygame.K_RIGHT or event.key == ord('d'):
                 player.control(-settings.move_speed,0)
+            if event.key == pygame.K_SPACE:
+                player.stopjump()
 
         if event.type == pygame.QUIT:
             pygame.quit()

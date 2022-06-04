@@ -76,10 +76,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = self.rect.x + self.movex
         self.rect.y = self.rect.y + self.movey
 
+    def stopjump(self):
+        if self.gravityon:
+            self.movey = 0
+
     def jump(self, plat_list, ground_list):
         plat_hit_list = pygame.sprite.spritecollide(self, plat_list, False)
         ground_hit_list = pygame.sprite.spritecollide(self, ground_list, False)
         if plat_hit_list or ground_hit_list:
             self.movey -= settings.jump_height
             self.gravityon = True
+        else:
+            pass
+        #Hvis i lufta, ikke gjør noe
 
